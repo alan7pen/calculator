@@ -3,9 +3,106 @@ body {
 }
 
 .calculatorWrapper {
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
   background: white;
-  height: 200px;
+}
+
+.numberGrid {
+  display: flex;
+}
+
+h1  {
+  font-size: 72px;
+  text-align: center;
+}
+.calculatorHeader {
+  width: 702px;
+  height: 80px;
+}
+
+.preview, .maths {
+    width: 702px;
+    background-color: pink;
+    height: 96px;
+    font-size: 72px;
+    font-weight: 900;
+    text-align: right;
+    margin: 8px 0px;
+    //border-width: 4px;
+    border-color: black;
+}
+
+
+
+.number, .operator, .clear, .decimal, .equal {
+  width: 160px;
+  height: 96px;
+  margin: 8px;
+  font-size: 72px;
+  font-weight: 900;
+  background-color: yellow;
+}
+
+.operator {
+  background-color: cyan;
+}
+
+.clear {
+  background-color: salmon;
+}
+
+.zero {
+  width: 340px;
+}
+
+.y2 {
+  //background-color: cyan;
+  height: 208px;
+}
+
+
+@media only screen and (max-width: 750px) {
+  body {
+    background-color: lightblue;
+  }
+
+
+  .calculatorWrapper {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+  }
+  .calculatorHeader {
+    width: 444px;
+    height: 52px;
+  }
+  h1 {
+    font-size: 48px;
+  }
+
+  .preview, .maths {
+    width: 416px;
+    height: 72px;
+    font-size: 64px;
+  }
+
+  .number, .operator, .clear, .decimal, .equal {
+    width: 96px;
+    height: 64px;
+    margin: 4px;
+    font-size: 48px;
+  }
+
+  .zero {
+    width: 204px;
+  }
+
+  .y2 {
+    //background-color: cyan;
+    height: 136px;
+  }
+
+
 
 }

@@ -48,6 +48,13 @@ h1  {
   background-color: cyan;
 }
 
+.equal {
+  background-color: greenyellow;
+}
+
+.decimal {
+  background-color: lightgrey;
+}
 .clear {
   background-color: salmon;
 }

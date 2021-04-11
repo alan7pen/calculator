@@ -35,7 +35,7 @@ h1  {
 
 
 
-.number, .operator, .clear, .decimal, .equal {
+.number, .operator, .clear, .decimal, .equal, .random {
   width: 160px;
   height: 96px;
   margin: 8px;
@@ -44,6 +44,11 @@ h1  {
   background-color: yellow;
 }
 
+.random {
+  background-color: orange;
+}
+
+}
 .operator {
   background-color: cyan;
 }
@@ -60,7 +65,7 @@ h1  {
 }
 
 .zero {
-  width: 340px;
+  //width: 340px;
 }
 
 .y2 {

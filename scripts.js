@@ -2,6 +2,7 @@
 let number1 = ''
 let number2 = ''
 let operator = ''
+let calcSum = 1;
 
 
 /*------ Selecting elements ----- */
@@ -25,6 +26,8 @@ console.log('objEqual', objEquals);
 
 var objDecimal = document.querySelector('.decimal');
 //console.log('objDecimal', objDecimal);
+var objRandom = document.querySelector('.random');
+//console.log('objRandom', objRandom);
 
 
 /*------ Events listners ----- */
@@ -42,7 +45,7 @@ for(let counter = 0; counter < arrOperators.length; counter++) {
 
 objClear.addEventListener('click', clear);
 objEquals.addEventListener('click', equals);
-
+objRandom.addEventListener('click', preview)
 
 
 /*------ Functions ----- */
@@ -58,6 +61,12 @@ function preview(event) {
     case '+':
     case '-':
       dataType = 'operator';
+      break;
+    
+    case 'R':
+    case 'r':
+      dataType = 'number';
+      currentItem = Math.floor(Math.random() * 10).toString();
       break;
     default:
       dataType = 'number';
@@ -76,11 +85,21 @@ function preview(event) {
   console.log('currentItem', currentItem);
   console.log('dataType', dataType);
 
+  if (calcSum == 1) {
+    //objPreview.value = objMaths.value.toSting();
+    number1 = objMaths.value;
+    number2 = '';
+    objMaths.value = '';
+    calcSum = 0;
+  }
 
   if (dataType == 'operator') {
     if(number1) {
       operator = currentItem;
       strMessage = number1 + ' ' + operator;
+      if (number2) {
+        strMessage += ' ' + number2;
+      }
     } else {
       console.log('You cannot set an operator without a number being set');
     }
@@ -105,6 +124,17 @@ function preview(event) {
     }
     
   }
+
+  if (!number1.isNaN) {
+    strMessage = number1.toString();
+  }
+  if (operator) {
+    strMessage += ' ' + operator + ' ';
+  }
+  if(!number2.isNaN) {
+    strMessage += number2.toString();
+  }
+
   objPreview.value = strMessage;
   
 
@@ -117,12 +147,14 @@ function clear(event) {
   operator = "";
   objPreview.value = "";
   objMaths.value = "";
+  calcSum = 0;
 }
 
 
 function equals(event) {
   var sum = calculator(number1, number2, operator);
   objMaths.value = sum;
+  calcSum = 1;
 }
 
 //Adding a validation function for the numbers

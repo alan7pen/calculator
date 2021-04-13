@@ -21,7 +21,11 @@ h1  {
   height: 80px;
 }
 
-.preview, .maths {
+.error{
+  color:red;
+  font-size: 24px;
+}
+.preview, .maths, .previous {
     width: 702px;
     background-color: pink;
     height: 96px;

@@ -1,7 +1,7 @@
 /*------ Variables ----- */
 let number1 = ''
 let number2 = ''
-let operator = ''
+let operator = '', blnEquals = false
 
 
 /*------ Selecting elements ----- */
@@ -17,14 +17,21 @@ var objMaths = document.querySelector('.maths');
 var objPreview = document.querySelector('.preview');
 //console.log('objPreview', objPreview);
 
+var objPrevious = document.querySelector(".previous");
+//console.log('previous', objPrevious);
+
 var objClear = document.querySelector('.clear');
 //console.log('objClear', objClear);
 
 var objEquals = document.querySelector('.equal');
-console.log('objEqual', objEquals);
+//console.log('objEqual', objEquals);
+var objError = document.querySelector(".error");
+//console.log('objError', objError);
 
 var objDecimal = document.querySelector('.decimal');
 //console.log('objDecimal', objDecimal);
+
+
 
 
 /*------ Events listners ----- */
@@ -42,15 +49,18 @@ for(let counter = 0; counter < arrOperators.length; counter++) {
 
 objClear.addEventListener('click', clear);
 objEquals.addEventListener('click', equals);
-
+objDecimal.addEventListener("click", preview);
 
 
 /*------ Functions ----- */
 function preview(event) {
   //console.log(event.target.innerHTML);
+  //console.log('blnEquals', blnEquals);
+
   let currentItem = event.target.innerHTML;
   let dataType = '';
   let strMessage = '';
+  objError.innerHTML = "";
 
   switch(currentItem) {
     case '*': case 'x':
@@ -74,32 +84,68 @@ function preview(event) {
   }
 
   console.log('currentItem', currentItem);
-  console.log('dataType', dataType);
+  //console.log('dataType', dataType);
 
 
   if (dataType == 'operator') {
+    if(blnEquals){
+      blnEquals = false;
+    }
+    if(number2){
+      number1 = calculator(number1,number2,operator);
+      number2 = "";
+      objPrevious.value = objPreview.value;
+      objMaths.value = "";
+  }
     if(number1) {
       operator = currentItem;
       strMessage = number1 + ' ' + operator;
     } else {
-      console.log('You cannot set an operator without a number being set');
+      objError.innerHTML = 'You cannot set an operator without a number being set';
+      return;
     }
   } else {
-
+    if(blnEquals){
+      number1 = "";
+      objPrevious.value = "";
+      blnEquals = false;
+    }
     if (operator) {
-      
+     
       if (number2) {
-        number2 += currentItem;
+        if(currentItem == '.'){
+          if(!hasDecimal(number2)){
+              number2 += currentItem;
+          }
       } else {
-        number2 = currentItem;
+          number2 += currentItem;
+      }
+      } else {
+        if(currentItem == '.'){
+          number2 = '0.';
+      } else {
+          number2 = currentItem;
+      }
       }
       strMessage = number1 + ' ' + operator + ' ' + number2;
+      var sum = calculator(number1, number2, operator);
+      objMaths.value = sum;
     } else {
 
       if (number1) {
-        number1 += currentItem;
+        if(currentItem == '.'){
+          if(!hasDecimal(number1)){
+              number1 += currentItem;
+          }
       } else {
-        number1 = currentItem;
+          number1 += currentItem;
+      }
+      } else {
+        if(currentItem == '.'){
+          number1 = '0.';
+      } else {
+          number1 = currentItem;
+      }
       }
       strMessage = number1;
     }
@@ -111,18 +157,42 @@ function preview(event) {
 }
 
 
+
+
+
+
 function clear(event) {
   number1 = "";
   number2 = "";
   operator = "";
+  objPrevious.value = "";
   objPreview.value = "";
   objMaths.value = "";
+  objError.innerHTML = "&nbsp;";
+  blnEquals = true;
 }
 
 
 function equals(event) {
   var sum = calculator(number1, number2, operator);
-  objMaths.value = sum;
+  if(sum){
+    objMaths.value = "";
+    objPrevious.value = objPreview.value;
+    objPreview.value = sum;
+    blnEquals = true;
+    number1 = sum;
+    number2 = "";
+    operator = "";
+  }
+}
+
+
+function hasDecimal(number){
+  if(number.indexOf('.') !== -1){
+      objError.innerHTML = 'You can only have one decimal place per number';
+      return true;
+  }
+  return false;
 }
 
 //Adding a validation function for the numbers
@@ -132,20 +202,25 @@ function isValidNumber(number){
 }
 function calculator(number1,number2,operator){
   //if number1 is not a number
-  if(!isValidNumber(number1)){
+  if(!isValidNumber(number1) || !number1){
       //end the function here and pass the message below.
-      return 'Argument 1 must be a number';
+      objError.innerHTML = 'Number 1 must be set';
+      return;
+  }
+    // if the operator does not equal + - * / %
+  //if(operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'){
+  if(operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'){
+    //end the function here and pass the message below.
+    objError.innerHTML =  'You need to set an operator';
+    return;
   }
   //if number 2 is not a number
-  if(!isValidNumber(number2)){
+  if(!isValidNumber(number2) || !number2){
       //end the function here and pass the message below.
-      return 'Argument 2 must be a number';
+      objError.innerHTML =  'Number2 must be set';
+      return;
   }
-  // if the operator does not equal + - * / %
-  if(operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'){
-      //end the function here and pass the message below.
-      return 'Argument 3 must be an arithmatic operator';
-  }
+
   //all fo the validation has passed so we need to do maths
   var sum;
   //based on the operator passed in argument 3 we will do a different sum

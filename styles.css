@@ -39,7 +39,7 @@ h1  {
 
 
 
-.number, .operator, .clear, .decimal, .equal {
+.number, .operator, .clear, .decimal, .equal, .random {
   width: 160px;
   height: 96px;
   margin: 8px;
@@ -64,12 +64,17 @@ h1  {
 }
 
 .zero {
-  width: 340px;
+  //width: 340px;
 }
 
 .y2 {
   //background-color: cyan;
   height: 208px;
+}
+
+
+.random {
+  background-color: orange;
 }
 
 
@@ -98,7 +103,7 @@ h1  {
     font-size: 64px;
   }
 
-  .number, .operator, .clear, .decimal, .equal {
+  .number, .operator, .clear, .decimal, .equal, .random {
     width: 96px;
     height: 64px;
     margin: 4px;
@@ -106,7 +111,7 @@ h1  {
   }
 
   .zero {
-    width: 204px;
+    //width: 204px;
   }
 
   .y2 {
